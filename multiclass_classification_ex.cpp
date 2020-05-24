@@ -10,19 +10,8 @@
         - class 2: points on the circle of radius 10 around the origin
         - class 3: points that are on a circle of radius 4 but not around the origin at all
 */
-#include <string_view>
 #include "classi.h"
 #include "csv/csv.h"
-
-// ----------------------------------------------------------------------------------------
-void read_data (
-        std::vector<sample_type>& samples,
-        std::vector<double>& labels,
-        const std::string& filename
-)
-{
-
-}
 
 /*!
     ensures
@@ -95,9 +84,9 @@ int main(int argc, char* argv[])
         std::vector<double> labels;
 
         // First, get our labeled set of training data
-        std::string filename = "dataset.csv";
+        //std::string filename = "dataset.csv";
 
-        io::CSVReader<8, io::trim_chars<>, io::no_quote_escape<';'>> in(filename);
+        io::CSVReader<8, io::trim_chars<>, io::no_quote_escape<';'>> in("dataset.csv");
         //in.read_header(io::ignore_missing_column, "x", "y", "rooms", "price", "area", "kitchen", "floor", "max_floor");
         double x(0), y(0), rooms(0), price(0), area(0), kitchen(0), floor(0), max_floor(0);
         in.read_row(x, y, rooms, price, area, kitchen, floor, max_floor);

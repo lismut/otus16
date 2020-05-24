@@ -57,7 +57,7 @@ int main(int argc, char* argv[])
             ++i;
         }
         inp(i) = atof(inp_str.c_str());
-    } catch (std::exception ex) {
+    } catch (std::exception& ex) {
         std::cout << "error in parsing input string" << std::endl;
         std::cout << ex.what() << std::endl;
         return 1;
@@ -66,12 +66,11 @@ int main(int argc, char* argv[])
     stats.normalize(inp);
     std::vector<OutPoints> out;
     int res = df3(inp);
-    for (auto i = 0; i < labels.size(); ++i) {
+    for (size_t i = 0; i < labels.size(); ++i) {
         if (round(labels[i]) == res) {
             out.emplace_back(samples[i], notNormSamples[i], inp);
         }
     }
-    for(const auto& a : out)
     std::sort(out.begin(), out.end(), [](const OutPoints& a, const OutPoints& b) {
         return a.dst < b.dst;
     });

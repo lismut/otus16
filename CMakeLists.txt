@@ -13,7 +13,7 @@ add_executable(rclst multiclass_classification_ex.cpp classi.h)
 add_executable(rclss user.cpp classi.h)
 
 set_target_properties(rclst PROPERTIES
-        CXX_STANDARD 14
+        CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
         )
 
@@ -25,7 +25,7 @@ target_link_libraries(rclst
         )
 
 set_target_properties(rclss PROPERTIES
-        CXX_STANDARD 14
+        CXX_STANDARD 17
         CXX_STANDARD_REQUIRED ON
         )
 
@@ -34,21 +34,6 @@ target_link_libraries(rclss
         blas
         lapack
         )
-if (MSVC)
-    target_compile_options(rclst PRIVATE
-            /W4
-            )
-    target_compile_options(rclss PRIVATE
-            /W4
-            )
-else ()
-    target_compile_options(rclst PRIVATE
-            -Wall -Wextra -pedantic -Werror
-            )
-    target_compile_options(rclss PRIVATE
-            -Wall -Wextra -pedantic -Werror
-            )
-endif()
 
 install(TARGETS rclst RUNTIME DESTINATION bin)
 install(TARGETS rclss RUNTIME DESTINATION bin)

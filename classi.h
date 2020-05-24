@@ -65,7 +65,7 @@ struct stat_sample {
 
 class record {
 public:
-    explicit record(sample_type&& _sample, std::vector<sample_type>& _samples) : samples(_samples), stat(_sample) {}
+    explicit record(sample_type&& _sample, std::vector<sample_type>& _samples) : stat(_sample), samples(_samples) {}
     void push(sample_type&& sample) {
         stat.refresh(sample);
         samples.emplace_back(sample);

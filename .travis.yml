@@ -5,6 +5,12 @@ before_script:
 - sudo apt-get update -qq
 - sudo apt-get -qq install libdlib-dev
 - sudo apt-get -qq install libopenblas-dev
+before_install:
+- sudo add-apt-repository --yes ppa:ubuntu-toolchain-r/test
+- sudo apt-get update -qq
+install:
+- sudo apt-get install -qq g++-6
+- sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 script:
 - cmake .
 - cmake --build .

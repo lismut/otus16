@@ -23,7 +23,7 @@ typedef radial_basis_kernel<sample_type> rbf_kernel;
 
 void norm(double& src, double min_, double diff)
 {
-    src = (src - min_) / diff;
+    src = abs(src - min_) / diff;
 }
 
 struct stat_sample {

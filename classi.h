@@ -65,8 +65,8 @@ struct stat_sample {
 
 class record {
 public:
-    explicit record(sample_type&& _sample, std::vector<sample_type>& _samples) : stat(_sample), samples(_samples) {}
-    void push(sample_type&& sample) {
+    explicit record(sample_type& _sample, std::vector<sample_type>& _samples) : stat(_sample), samples(_samples) {}
+    void push(sample_type& sample) {
         stat.refresh(sample);
         samples.emplace_back(sample);
     }
@@ -88,3 +88,22 @@ private:
     std::vector<sample_type>& samples;
     std::vector<sample_type> noNormSamples;
 };
+
+
+void parseString(std::string& inp_str, sample_type& inp)
+{
+    try {
+        size_t i = 0;
+        while (inp_str.find(';') != inp_str.npos) {
+            inp(i) = inp_str.find(';') != 0 ?
+                            atof(inp_str.substr(0, inp_str.find(';')).c_str()) : 0;
+            inp_str = inp_str.substr(inp_str.find(';') + 1, inp_str.size() - inp_str.find(';')).c_str();
+            ++i;
+        }
+        inp(i) = atof(inp_str.c_str());
+    } catch (std::exception& ex) {
+        std::cout << "error in parsing input string" << std::endl;
+        std::cout << ex.what() << std::endl;
+        throw;
+    }
+}

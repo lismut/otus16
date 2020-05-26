@@ -11,7 +11,6 @@
         - class 3: points that are on a circle of radius 4 but not around the origin at all
 */
 #include "classi.h"
-#include "csv/csv.h"
 
 /*!
     ensures
@@ -86,15 +85,21 @@ int main(int argc, char* argv[])
         // First, get our labeled set of training data
         //std::string filename = "dataset.csv";
 
-        io::CSVReader<8, io::trim_chars<>, io::no_quote_escape<';'>> in("dataset.csv");
-        //in.read_header(io::ignore_missing_column, "x", "y", "rooms", "price", "area", "kitchen", "floor", "max_floor");
-        double x(0), y(0), rooms(0), price(0), area(0), kitchen(0), floor(0), max_floor(0);
-        in.read_row(x, y, rooms, price, area, kitchen, floor, max_floor);
-        record rec({x, y, rooms, price, area, kitchen, floor, max_floor},
-                   samples);
-        while (in.read_row(x, y, rooms, price, area, kitchen, floor, max_floor)) {
-            rec.push({x, y, rooms, price, area, kitchen, floor, max_floor});
+        std::string inp_str;
+        std::ifstream in("dataset.csv");
+        if (!in.is_open()) {
+            std::cout << "Error opening training dataset";
+            return 1;
         }
+        in >> inp_str;
+        sample_type smp;
+        parseString(inp_str, smp);
+        record rec(smp, samples);
+        while (in >> inp_str) {
+            parseString(inp_str, smp);
+            rec.push(smp);
+        }
+
         rec.normalize();
 
         clusterize(samples, labels, cluster_count);

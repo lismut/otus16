@@ -49,20 +49,7 @@ int main(int argc, char* argv[])
     sample_type inp;
     std::string inp_str;
     std::cin >> inp_str;
-    try {
-        size_t i = 0;
-        while (inp_str.find(';') != inp_str.npos) {
-            inp(i) = atof(inp_str.substr(0, inp_str.find(';')).c_str());
-            inp_str = inp_str.substr(inp_str.find(';') + 1, inp_str.size() - inp_str.find(';')).c_str();
-            ++i;
-        }
-        inp(i) = atof(inp_str.c_str());
-    } catch (std::exception& ex) {
-        std::cout << "error in parsing input string" << std::endl;
-        std::cout << ex.what() << std::endl;
-        return 1;
-    }
-   // sample_type inpNoNorm = inp;
+    parseString(inp_str, inp);
     stats.normalize(inp);
     std::vector<OutPoints> out;
     int res = df3(inp);
